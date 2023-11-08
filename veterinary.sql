@@ -145,9 +145,9 @@ VALUES
     (9, 9, '2023-05-02 00:00:00', 4, 'Allergic reaction', 'Antihistamines', 'Allergic reaction due to food prescribed antihistamine'),
     (10, 10, '2023-05-20 00:00:00', 6, 'Conjunctivitis', 'Eye drops', 'Prescribed eye drops for conjunctivitis');
 
--- feat/add-column-registereddate
-ALTER TABLE owners
-ADD COLUMN REGISTEREDDATE DATE;
+    -- feat/add-column-registereddate
+    ALTER TABLE owners
+    ADD COLUMN REGISTEREDDATE DATE;
 
 --feat/rename-column-paymenttime
 ALTER TABLE invoices
@@ -181,23 +181,23 @@ SELECT SUM(totalamount) AS total_sales
 FROM invoices;
 
 -- feat/list-total-appoinment-owner-maria
-SELECT COUNT(*) AS total_appointments
-FROM appointments
-WHERE animalid IN (
-    SELECT animalid
-    FROM animals
-    WHERE ownerid = (
-        SELECT ownerid
-        FROM owners
-        WHERE ofirstname = 'Maria'
-    )
-);
+SELECT owners.ofirstname AS "owner",
+count (appointments.animalid) AS "Total Appointment"
+FROM animals
+INNER JOIN owners
+ON animals.ownerid = owners.ownerid
+INNER JOIN appointments
+ON animals.animalid = appointments.animalid
+where owners.ofirstname = 'Maria';
 
--- feat/list-animal-w-most-appoinment
+--feat/list-animal-w-most-appoinment
+UPDATE appointments
+SET animalid = 2
+WHERE appointid = 7;
+
 SELECT a.animalid, a.name, COUNT(*) AS appointment_count
 FROM animals a
-JOIN appointments ap 
-	ON a.animalid = ap.animalid
+JOIN appointments ap ON a.animalid = ap.animalid
 GROUP BY a.animalid, a.name
 ORDER BY appointment_count DESC
 LIMIT 1;
