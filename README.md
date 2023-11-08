@@ -1,1 +1,3 @@
-# Activity_4
+## Collaborators
+- Macapagal, Rick Andrew M.
+- Pagcaliwagan, Ken Adriane A.
