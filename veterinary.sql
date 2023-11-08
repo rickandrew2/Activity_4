@@ -147,4 +147,8 @@ VALUES
 
 -- feat/add-column-registereddate
 ALTER TABLE owners
-ADD REGISTEREDDATE DATE;
+ADD COLUMN REGISTEREDDATE DATE;
+
+--feat/rename-column-paymenttime
+ALTER TABLE invoices
+RENAME COLUMN paymentdate TO paymenttime;
