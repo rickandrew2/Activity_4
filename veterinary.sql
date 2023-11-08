@@ -8,7 +8,7 @@ CREATE TABLE owners(
     olastname VARCHAR(50),
     address VARCHAR(100),
     phone VARCHAR(15),
-    email VARCHAR(100),
+    email VARCHAR(100)
 );
 
 --feat/create-table-animals
@@ -82,16 +82,16 @@ VALUES
     --feat/insert-10-rows-animals
 INSERT INTO animals (animalid, name, species, breed, dateofbirth, gender, color, ownerid)
 VALUES
-(1, 'Fido', 'Dog', 'Golden Retriever', 2018-03-15, 'Male', 'Golden', 1),
-(2, 'Whiskers', 'Cat', 'Siamese', 2019-07-20, 'Female', 'Cream', 2),
-(3, 'Rocky', 'Dog', 'German Shepherd', 2017-05-10, 'Male', 'Black and Tan', 3),
-(4, 'Fluffy', 'Cat', 'Persian', 2020-01-30, 'Male', 'White', 4),
-(5, 'Luna', 'Dog', 'Larbrador Retriever', 2019-11-25, 'Female', 'Yellow', 5),
-(6, 'Mochi', 'Cat', 'Maine Coon', 2018-09-12, 'Male', 'Brown Tabby', 6),
-(7, 'Bella', 'Dog', 'Poodle', 2020-04-05, 'Female', 'White', 7),
-(8, 'Simba', 'Cat', 'Bengal', 2018-06-18, 'Male', 'Spotted Rosetted', 8),
-(9, 'Max', 'Dog', 'Dachshund,' 2020-07-14, 'Male', 'Black and Tan', 9),
-(10,'Cleo', 'Cat', 'Ragdoll', 2019-12-22, 'Female', 'Seal Point', 10);
+(1, 'Fido', 'Dog', 'Golden Retriever', '2018-03-15', 'Male', 'Golden', 1),
+(2, 'Whiskers', 'Cat', 'Siamese', '2019-07-20', 'Female', 'Cream', 2),
+(3, 'Rocky', 'Dog', 'German Shepherd', '2017-05-10', 'Male', 'Black and Tan', 3),
+(4, 'Fluffy', 'Cat', 'Persian', '2020-01-30', 'Male', 'White', 4),
+(5, 'Luna', 'Dog', 'Larbrador Retriever', '2019-11-25', 'Female', 'Yellow', 5),
+(6, 'Mochi', 'Cat', 'Maine Coon', '2018-09-12', 'Male', 'Brown Tabby', 6),
+(7, 'Bella', 'Dog', 'Poodle', '2020-04-05', 'Female', 'White', 7),
+(8, 'Simba', 'Cat', 'Bengal', '2018-06-18', 'Male', 'Spotted Rosetted', 8),
+(9, 'Max', 'Dog', 'Dachshund', '2020-07-14', 'Male', 'Black and Tan', 9),
+(10,'Cleo', 'Cat', 'Ragdoll', '2019-12-22', 'Female', 'Seal Point', 10);
 
 -- feat/insert-10-rows-appointments
 INSERT INTO appointments (appointid, animalid, appointdate, reason)
@@ -108,7 +108,7 @@ VALUES
 (10,10, '2023-05-20', 'Eye infection');
 
 --feat/insert-10-rows-doctors
-INSERT INTO doctors(doctorid, dfirstname, dlastname, specialty, phone, email)
+INSERT INTO doctors(doctorid, dfirstname, dlastname, speciality, phone, email)
 VALUES
 (1, 'Dr.Maria', 'Santos', 'General Veterinarian', '987-654-3210', 'maria@example.com'),
 (2, 'Dr.Antonio', 'Gonzales', 'Feline Specialist', '555-123-4567', 'antonio@example.com'),
@@ -152,3 +152,17 @@ ADD COLUMN REGISTEREDDATE DATE;
 --feat/rename-column-paymenttime
 ALTER TABLE invoices
 RENAME COLUMN paymentdate TO paymenttime;
+
+-- feat/remove-appointment-simba
+DELETE FROM invoices
+WHERE appointid = (
+	SELECT appointid 
+	FROM appointments 
+	WHERE animalid = (
+		SELECT animalid 
+		FROM animals WHERE name = 'Simba'));
+
+DELETE FROM appointments
+WHERE animalid = (
+	SELECT animalid 
+	FROM animals WHERE name = 'Simba');
