@@ -42,3 +42,12 @@ CREATE TABLE doctors(
 	phone VARCHAR(15),
 	email VARCHAR(50)	
 );
+
+--feat/create-table-invoices
+CREATE TABLE invoices (
+	invoiceid INT PRIMARY KEY,
+	appointid INT,
+	totalamount NUMERIC (10,2),
+	paymentdate TIME,
+	FOREIGN KEY (appointid) REFERENCES appointments (appointid)
+);
